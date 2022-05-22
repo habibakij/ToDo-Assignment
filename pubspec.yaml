@@ -30,6 +30,10 @@ dependencies:
   flutter_easyloading: ^3.0.3
   hexcolor: ^2.0.6
   delayed_display: ^2.0.0
+  firebase_auth: ^3.3.0
+  firebase_core: ^1.10.0
+  firebase_database: ^9.0.0
+  cloud_firestore: ^3.1.0
 
 dev_dependencies:
   flutter_test:
