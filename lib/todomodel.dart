@@ -6,7 +6,7 @@ class TodoModel {
   String? title;
   bool? done;
 
-  TodoModel({this.todoID, this.title, this.done});
+  TodoModel(this.todoID, this.title, this.done);
 
   TodoModel.fromDocumentSnapshot(DocumentSnapshot snapshot){
       todoID= snapshot.id;

@@ -1,12 +1,16 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:todo/card_wid.dart';
 import 'package:todo/common.dart';
 import 'package:todo/database.dart';
 import 'package:get/get.dart';
+import 'package:todo/details.dart';
 import 'package:todo/todocontroller.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -19,15 +23,32 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
 
       appBar: AppBar(
-        leading: const Icon(Icons.add, color: Colors.transparent,),
-        title: const Text(
-          "Home",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 25,
-            color: Colors.black,
+        actions: [
+
+          Container(
+            width: MediaQuery.of(context).size.width - 15,
+            margin: const EdgeInsets.only(right: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const [
+
+                Text(
+                  "Home",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+
+                Icon(Icons.search, size: 35, color: Colors.white),
+
+              ],
+            ),
           ),
-        ),
+
+        ],
       ),
 
       body: _customBody(context),
@@ -47,23 +68,29 @@ class HomeScreen extends StatelessWidget {
       slivers: [
 
         SliverToBoxAdapter(
-          child: Container(
-            child: GetX<TodoController>(
-              init: Get.put(TodoController()),
-              builder: (TodoController todoController){
-                if(todoController != null && todoController.todos != null){
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: todoController.todos.length,
-                      itemBuilder: (context, index){
-                        return Text(todoController.todos[index].toString());
-                    }),
-                  ); 
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            ),
+          child: GetX<TodoController>(
+            init: Get.put(TodoController()),
+            builder: (TodoController todoController){
+              if(todoController != null && todoController.todos.isNotEmpty){
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: todoController.todos.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index){
+                      return InkWell(
+                        child: TodoCard(todoModel: todoController.todos[index]),
+                        onTap: (){
+                          log("check_id: $index");
+                          Get.to(TodoDetails(todoModel: todoController.todos[index], index: index));
+                        },
+                      );
+                  }),
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
           )
         ),
 
@@ -201,4 +228,6 @@ class HomeScreen extends StatelessWidget {
       },
     );
   }
+
+
 }
