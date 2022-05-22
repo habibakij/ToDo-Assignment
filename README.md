@@ -9,7 +9,7 @@ This project is a starting point for a Flutter application.
 A few resources to get you started if this is your first Flutter project:
 
 Apk link:
-https://drive.google.com/file/d/1QyiYLyqly5Ny5BdkSR8xlt3RCmQyKrzN/view?usp=sharing
+https://drive.google.com/file/d/1-2IB2pTF0BpsJK5jiWUsiZiOot9JzyOs/view?usp=sharing
 
 Image preview
 
